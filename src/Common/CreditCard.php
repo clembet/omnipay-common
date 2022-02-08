@@ -96,6 +96,7 @@ class CreditCard
     use ParametersTrait;
 
     const BRAND_VISA = 'visa';
+    const BRAND_VISAELECTRON = 'visaelectron';
     const BRAND_MASTERCARD = 'mastercard';
     const BRAND_DISCOVER = 'discover';
     const BRAND_AMEX = 'amex';
@@ -103,10 +104,18 @@ class CreditCard
     const BRAND_JCB = 'jcb';
     const BRAND_SWITCH = 'switch';
     const BRAND_SOLO = 'solo';
-    const BRAND_DANKORT = 'dankort';
+    //const BRAND_DANKORT = 'dankort';
+    //const BRAND_FORBRUGSFORENINGEN = 'forbrugsforeningen';
     const BRAND_MAESTRO = 'maestro';
-    const BRAND_FORBRUGSFORENINGEN = 'forbrugsforeningen';
     const BRAND_LASER = 'laser';
+    const BRAND_HIPERCARD = 'hipercard';
+    const BRAND_ENROUTE = 'enroute';
+    const BRAND_UNIONPAY = 'union';
+    const BRAND_AURA = 'aura';
+    const BRAND_BANESCARD = 'banescard';
+    const BRAND_CABAL = 'cabal';
+    const BRAND_ELO = 'elo';
+    const BRAND_GOODCARD = 'goodcard';
 
     /**
      * All known/supported card brands, and a regular expression to match them.
@@ -119,20 +128,30 @@ class CreditCard
      * @link https://github.com/Shopify/active_merchant/blob/master/lib/active_merchant/billing/credit_card_methods.rb
      * @var array
      */
-    const REGEX_MASTERCARD = '/^(5[1-5]\d{4}|677189)\d{10}$|^2(?:2(?:2[1-9]|[3-9]\d)|[3-6]\d\d|7(?:[01]\d|20))\d{12}$/';
+    const REGEX_MASTERCARD = '/^(603136|603689|608619|606200|603326|605919|608783|607998|603690|604891|603600|603134|608718|603680|608710|604998)|(5[1-5][0-9]{14}|2221[0-9]{12}|222[2-9][0-9]{12}|22[3-9][0-9]{13}|2[3-6][0-9]{14}|27[01][0-9]{13}|2720[0-9]{12})$/';
     protected $supported_cards = array(
-        self::BRAND_VISA => '/^4\d{12}(\d{3})?$/',
+        self::BRAND_GOODCARD => '/^(606387|605680|605674|603574)[0-9]{10,12}/',
+        self::BRAND_ELO => '/^(401178|401179|431274|438935|451416|457393|457631|457632|504175|627780|636297|636368|(506699|5067[0-6]\d|50677[0-8])|(50900\d|5090[1-9]\d|509[1-9]\d{2})|65003[1-3]|(65003[5-9]|65004\d|65005[0-1])|(65040[5-9]|6504[1-3]\d)|(65048[5-9]|65049\d|6505[0-2]\d|65053[0-8])|(65054[1-9]|6505[5-8]\d|65059[0-8])|(65070\d|65071[0-8])|65072[0-7]|(65090[1-9]|65091\d|650920)|(65165[2-9]|6516[6-7]\d)|(65500\d|65501\d)|(65502[1-9]|6550[3-4]\d|65505[0-8]))[0-9]{10,12}/',
+        self::BRAND_CABAL => '/^(604324|604330|604337|604203|604338)[0-9]{10,12}/',
+        self::BRAND_BANESCARD => '/^(603182)[0-9]{10,12}/',
+        self::BRAND_AURA => '/^50[0-9]{14,17}$/',
+        self::BRAND_UNIONPAY => '/^(62[0-9]{14,17})$/',
+        self::BRAND_LASER => '/^(6304|6706|6709|6771)[0-9]{12,15}$/',
+        self::BRAND_VISAELECTRON => '/^(4026|417500|4405|4508|4844|4913|4917)\d+$/',
+        self::BRAND_MAESTRO => '/^(5018|5020|5038|5893|6304|6759|6761|6762|6763)[0-9]{8,15}$/',
+        self::BRAND_SWITCH => '/^(4903|4905|4911|4936|6333|6759)[0-9]{12}|(4903|4905|4911|4936|6333|6759)[0-9]{14}|(4903|4905|4911|4936|6333|6759)[0-9]{15}|564182[0-9]{10}|564182[0-9]{12}|564182[0-9]{13}|633110[0-9]{10}|633110[0-9]{12}|633110[0-9]{13}$/',
+        self::BRAND_SOLO => '/^(6334|6767)[0-9]{12}|(6334|6767)[0-9]{14}|(6334|6767)[0-9]{15}$/',
+        self::BRAND_ENROUTE => '/^(2014|2149)[0-9]{11}/',
+        self::BRAND_JCB => '/^(?:2131|1800|35\d{3})\d{11}$/',
+        self::BRAND_DISCOVER => '/^6(?:011|5[0-9]{2}|4[4-9][0-9]{1}|(22(12[6-9]|1[3-9][0-9]|[2-8][0-9]{2}|9[01][0-9]|92[0-5]$)[0-9]{10}$))[0-9]{12}$/',
+        self::BRAND_HIPERCARD => '/^(38[0-9]{17}|60[0-9]{14})$/',
+        self::BRAND_AMEX => '/^3[47][0-9]{13}$/',
+        self::BRAND_DINERS_CLUB => '/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/',
         self::BRAND_MASTERCARD => self::REGEX_MASTERCARD,
-        self::BRAND_DISCOVER => '/^(6011|65\d{2}|64[4-9]\d)\d{12}|(62\d{14})$/',
-        self::BRAND_AMEX => '/^3[47]\d{13}$/',
-        self::BRAND_DINERS_CLUB => '/^3(0[0-5]|[68]\d)\d{11}$/',
-        self::BRAND_JCB => '/^35(28|29|[3-8]\d)\d{12}$/',
-        self::BRAND_SWITCH => '/^6759\d{12}(\d{2,3})?$/',
-        self::BRAND_SOLO => '/^6767\d{12}(\d{2,3})?$/',
-        self::BRAND_DANKORT => '/^5019\d{12}$/',
-        self::BRAND_MAESTRO => '/^(5[06-8]|6\d)\d{10,17}$/',
-        self::BRAND_FORBRUGSFORENINGEN => '/^600722\d{10}$/',
-        self::BRAND_LASER => '/^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/',
+        self::BRAND_VISA => '/^4[0-9]{12}(?:[0-9]{3})?$/', //'/^4\d{12}(\d{3})?$/'
+
+        //self::BRAND_DANKORT => '/^5019\d{12}$/',
+        //self::BRAND_FORBRUGSFORENINGEN => '/^600722\d{10}$/',
     );
 
     /**
@@ -1546,5 +1565,88 @@ class CreditCard
     public function setGender($value)
     {
         return $this->setParameter('gender', $value);
+    }
+
+    public function getNumberToken()
+    {
+        return $this->getParameter('number_token');
+    }
+
+    public function setNumberToken($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('number_token', $value);
+    }
+
+    public function getShippingNumber()
+    {
+        return $this->getParameter('shippingNumber');
+    }
+
+    public function setShippingNumber($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('shippingNumber', $value);
+    }
+
+    public function getShippingDistrict()
+    {
+        return $this->getParameter('shippingDistrict');
+    }
+
+    public function setShippingDistrict($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('shippingDistrict', $value);
+    }
+
+    public function getShippingAmount()
+    {
+        return $this->getParameter('shippingAmount');
+    }
+
+    public function setShippingAmount($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('shippingAmount', $value);
+    }
+
+    public function getBillingNumber()
+    {
+        return $this->getParameter('billingNumber');
+    }
+
+    public function setBillingNumber($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('billingNumber', $value);
+    }
+
+    public function getBillingDistrict()
+    {
+        return $this->getParameter('billingDistrict');
+    }
+
+    public function setBillingDistrict($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('billingDistrict', $value);
+    }
+
+    public function getHolderDocumentNumber()
+    {
+        return $this->getParameter('holder_document_number');
+    }
+
+    public function setHolderDocumentNumber($value)
+    {
+        // strip non-numeric characters
+        return $this->setParameter('holder_document_number', $value);
+    }
+
+    public function getAreaCode()
+    {
+        $phone = $this->getPhone();
+        return substr($phone, 0, 2);
     }
 }
