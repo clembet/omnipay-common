@@ -545,7 +545,28 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getClientIp()
     {
-        return $this->getParameter('clientIp');
+        $ip = $this->getParameter('clientIp');
+        if($ip)
+            return $ip;
+
+        $ip = "127.0.0.1";
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+            //ip from share internet
+            $ip = @$_SERVER['HTTP_CLIENT_IP'];
+        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+            //ip pass from proxy
+            $ip = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        }elseif(!empty($_SERVER['HTTP_X_FORWARDED'])){
+            //ip pass from proxy
+            $ip = @$_SERVER['HTTP_X_FORWARDED'];
+        }elseif(!empty($_SERVER['HTTP_FORWARDED'])){
+            //ip pass from proxy
+            $ip = @$_SERVER['HTTP_FORWARDED'];
+        }elseif(!empty($_SERVER['REMOTE_ADDR'])){
+            $ip = @$_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ip;
     }
 
     /**
