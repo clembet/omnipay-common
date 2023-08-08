@@ -68,7 +68,7 @@ class Client implements ClientInterface, Psr18ClientInterface
             ++$idxHeader;
 		}
         $bodyStream = null;
-        if($body != null && is_string($body) && is_array(json_decode($body, true)))
+        if($body != null && is_string($body) && strlen($body)>0)
         {
             //$bodyStream = Utils::streamFor($body);
             $bodyStream = $this->streamFactory->createStream($body);
